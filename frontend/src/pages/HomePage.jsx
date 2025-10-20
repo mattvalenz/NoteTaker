@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUI.jsx";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -11,14 +12,20 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-          const res = await axios.get("http://localhost:5173/api/notes")
-          console.log(res.data)
-
-      } 
-      
-      catch (error) {
-
+        const res = await axios.get("http://localhost:3000/api/notes");
+        console.log(res.data);
+        setNotes(res.data);
+        setIsRateLimited(false);
+      } catch (error) {
         console.error("Error fetching notes:", error);
+        console.log(error);
+        if (error.response?.status === 429) {
+          setIsRateLimited(true);
+        } else {
+          toast.error("An error occurred while fetching notes.");
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -29,6 +36,22 @@ const HomePage = () => {
     <div className="min-h-screen">
       <Navbar />
       {isRateLimited && <RateLimitedUI />}
+
+      <div className="max-w-7xl mx-auto p-4 mt-6 ">
+        {true && <div className="text-center text-primary py-10"> Loading notes...</div>}
+
+        {notes.length >0 && !isRateLimited && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">  
+          {notes.map(note => (
+            <div> 
+              {note.title} | {note.content}
+            </div>
+          ))}
+
+          </div>
+        )}
+
+      </div>
     </div>
   );
 };

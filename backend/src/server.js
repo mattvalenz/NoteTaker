@@ -12,8 +12,11 @@ const PORT = process.env.PORT || 5001;
 
 
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173' // adjust this to your frontend's origin
+}))
 app.use(rateLimiter)
-app.use(cors())
+
 
 // app.use((req, res, next) => {
 //   console.log(`Req method is ${req.method} at ${req.url}`);
