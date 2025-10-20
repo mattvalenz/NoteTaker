@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUI.jsx";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import NoteCard from "../components/NoteCard.jsx";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -43,9 +44,7 @@ const HomePage = () => {
         {notes.length >0 && !isRateLimited && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">  
           {notes.map(note => (
-            <div> 
-              {note.title} | {note.content}
-            </div>
+             <NoteCard key={note._id} note={note}/>
           ))}
 
           </div>
