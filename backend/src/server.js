@@ -3,6 +3,7 @@ import notesRoutes from "./routes/notesRoutes.js";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import rateLimiter from "./middleware/rateLimiter.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(rateLimiter)
+app.use(cors())
 
 // app.use((req, res, next) => {
 //   console.log(`Req method is ${req.method} at ${req.url}`);
