@@ -23,3 +23,40 @@ body {
   background: radial-gradient(125% 125% at 50% 10%, #000 60%, #00FF9D40 100%) !important;
   background-attachment: fixed;
 }
+
+/* Line clamp utilities for text truncation */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* Form alignment fixes */
+.form-control {
+  width: 100% !important;
+}
+
+.form-control .label {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  justify-content: flex-start !important;
+}
+
+.input, .textarea {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.label-text {
+  color: inherit !important;
+}
