@@ -17,3 +17,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Custom gradient that won't be overridden by DaisyUI themes */
+.custom-gradient-bg {
+  background: radial-gradient(125% 125% at 50% 10%, #000 60%, #00FF9D40 100%) !important;
+  background-attachment: fixed;
+}
