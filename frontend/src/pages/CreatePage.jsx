@@ -1,14 +1,15 @@
 import { ArrowLeftIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import axios from "axios";
+
+import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 
 const CreatePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,15 +22,23 @@ const CreatePage = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:3000/api/notes", {
-        title, 
-        content
-      })
+      await api.post("/notes", {
+        title,
+        content,
+      });
       toast.success("Note created successfully!");
-      navigate("/")
+      navigate("/");
     } catch (error) {
-      console.log("error creating note", error)
-      toast.error("An error occurred while creating the note.");
+       console.log("error creating note", error);
+      if (error.response.status === 429) {
+        toast.error("Slow down! You're sending too many requests.", {
+          duration: 4000,
+          icon: "💀",
+        });
+      } else {
+       
+        toast.error("An error occurred while creating the note.");
+      }
     } finally {
       setLoading(false);
     }
