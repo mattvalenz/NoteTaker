@@ -37,9 +37,26 @@ const NoteDetailPage = () => {
       toast.success("Note deleted successfully!")
     } catch (error) {
       toast.error("Failed to delete the note");
+      console.log("Error in handleDelete", error)
     }
   }
-  const handleSave = () => {}
+  const handleSave = async() => {
+    if(!note.title.trim() || !note.content.trim()){
+      toast.error("All fields are required.");
+      return;
+    }
+    setSaving(true)
+
+    try {
+      await api.put(`/notes/${id}`, note)
+      toast.success("Note updated successfully!")
+    } catch (error) {
+      toast.error("Failed to update the note");
+      console.log("Error in handleSave", error)
+    }finally{
+      setSaving(false)
+    }
+  }
 
   if(loading) {
     return (
